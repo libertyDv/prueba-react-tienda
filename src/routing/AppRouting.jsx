@@ -11,7 +11,7 @@ export function AppRouting() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/items" element={<Resultados />} />
-                <Route path="/items/:id" element={<Resultados />} />
+                <Route path="/items/:id" element={<Items />} />
             </Routes>
         </Router>
     );

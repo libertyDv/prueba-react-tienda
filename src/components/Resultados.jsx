@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 export function Resultados() {
@@ -24,7 +24,7 @@ export function Resultados() {
     useEffect(() => {
         // Array.isArray(products)  ---------> verifica si products es un array
         // && searchQuery) -------------> verifica si searchQuery tiene un valor truthy (no es null, undefined, etc)
-        if (Array.isArray(products) && searchQuery) { 
+        if (Array.isArray(products) && searchQuery) {
             const filtered = products.filter(product =>
                 product.title.toLowerCase().includes(searchQuery.toLowerCase())
             );
@@ -34,6 +34,12 @@ export function Resultados() {
             setFilteredProducts([]);
         }
     }, [searchQuery, products]);
+
+    const navigate = useNavigate()
+
+    const handleProductClick = (productId) => {
+        navigate(`/items/${productId}`);
+    };
 
     return (
         <main>
@@ -46,7 +52,11 @@ export function Resultados() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 {filteredProducts.length > 0 ? (
                     filteredProducts.map(product => (
-                        <div key={product.id} style={{ border: '1px solid #ccc', padding: '20px', borderRadius: '8px' }}>
+                        <div 
+                        key={product.id} 
+                        style={{ border: '1px solid #ccc', padding: '20px', borderRadius: '8px' }}
+                        onClick={() => handleProductClick(product.id)}
+                        >
                             {/* Mostrar la imagen de `thumbnail` */}
                             {product.thumbnail && (
                                 <img src={product.thumbnail} alt={product.title} style={{ width: '150px' }} />
